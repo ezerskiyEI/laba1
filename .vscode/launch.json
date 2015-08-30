@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "java",
+        "name": "Main",
+        "request": "launch",
+        "mainClass": "Main",
+        "projectName": "laba1_ea4c9b64"
+    },
+    {
+        "type": "java",
+        "name": "JavaFX запуск",
+        "request": "launch",
+        "mainClass": "demo.parallel.Main",
+        "vmArgs": "--module-path D:/javafx-sdk-21.0.8/lib --add-modules javafx.controls"
+    }
+]
+}
