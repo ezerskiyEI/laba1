@@ -85,6 +85,21 @@ public class Complex {
         return this;
     }
 
+    public Complex conjugate() {
+        return new Complex(this.re, -this.im);
+    }
+    public Complex divide(Complex other) {
+        double denom = other.re * other.re + other.im * other.im;
+        double newRe = (this.re * other.re + this.im * other.im) / denom;
+        double newIm = (this.im * other.re - this.re * other.im) / denom;
+        return new Complex(newRe, newIm);
+    }
+
+    public Complex minus(Complex other) {
+        return new Complex(this.re - other.re, this.im - other.im);
+    }
+
+
     /**
      * Square of Complex object's length, we're using square of length to 
      * eliminate the computation of square root

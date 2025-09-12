@@ -270,21 +270,17 @@ class MandelbrotSetTask extends Task<Long> {
      *
      * @param comp a complex number used for calculation
      * @return number of iterations a value stayed within a given disk.
-    /**
-    /**
-     * Вычисляет количество итераций до выхода за границу.
-     * Формула: z = (z + c) * z
      */
     private int calc(Complex comp) {
         int count = 0;
         Complex z = new Complex(0, 0);
         do {
-            z = z.plus(comp).times(z.plus(comp));
-
+            z = z.conjugate().plus(comp).times(z.conjugate().plus(comp));
             count++;
         } while (count < CAL_MAX_COUNT && z.lengthSQ() < LENGTH_BOUNDARY);
         return count;
     }
+
 
     /**
      * Calculates a color of a given pixel on the image using
