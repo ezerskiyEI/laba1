@@ -42,7 +42,7 @@ import javafx.scene.paint.Color;
  * Task to render Mandelbrot set using given parameters. See {@link
  * #MandelbrotRendererTask(boolean, javafx.scene.image.PixelWriter, int, int,
  * double, double, double, double, double, double, double, double, boolean)
- * constructor} for parameters list. The task returns time in milliseconds as 
+ * constructor} for parameters list. The task returns time in milliseconds as
  * its calculated value.
  *
  * <p><i>
@@ -64,13 +64,13 @@ class MandelbrotSetTask extends Task<Long> {
 
     /**
      * This is the square of max radius, Mandelbrot set contained in the closed
-     * disk of radius 2 around the origin plus some area around, so 
+     * disk of radius 2 around the origin plus some area around, so
      * LENGTH_BOUNDARY is 6.
      */
     private static final double LENGTH_BOUNDARY = 6d;
 
     /**
-     * For antialiasing we break each pixel into 3x3 grid and interpolate 
+     * For antialiasing we break each pixel into 3x3 grid and interpolate
      * between values calculated on those grid positions
      */
     private static final int ANTIALIASING_BASE = 3;
@@ -195,7 +195,7 @@ class MandelbrotSetTask extends Task<Long> {
     }
 
     /**
-     * Returns current task execution time while task is running and total 
+     * Returns current task execution time while task is running and total
      * task time when task is finished
      * @return task time in milliseconds
      */
@@ -215,7 +215,7 @@ class MandelbrotSetTask extends Task<Long> {
     @Override
     protected Long call() throws Exception {
         synchronized(pixelWriter) {
-            // Prepares an image 
+            // Prepares an image
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     pixelWriter.setColor(x, y, Color.TRANSPARENT);
@@ -265,24 +265,29 @@ class MandelbrotSetTask extends Task<Long> {
      * Calculates number of iterations a complex quadratic polynomials
      * stays within a disk of some finite radius for a given complex number.
      *
-     * This number is used to choose a color for this pixel for precalculated 
+     * This number is used to choose a color for this pixel for precalculated
      * color tables.
      *
      * @param comp a complex number used for calculation
      * @return number of iterations a value stayed within a given disk.
+    /**
+    /**
+     * Вычисляет количество итераций до выхода за границу.
+     * Формула: z = (z + c) * z
      */
     private int calc(Complex comp) {
         int count = 0;
-        Complex c = new Complex(0, 0);
+        Complex z = new Complex(0, 0);
         do {
-            c = c.times(c).plus(comp);
+            z = z.plus(comp).times(z.plus(comp));
+
             count++;
-        } while (count < CAL_MAX_COUNT && c.lengthSQ() < LENGTH_BOUNDARY);
+        } while (count < CAL_MAX_COUNT && z.lengthSQ() < LENGTH_BOUNDARY);
         return count;
     }
 
     /**
-     * Calculates a color of a given pixel on the image using 
+     * Calculates a color of a given pixel on the image using
      * {@link #calc(demo.parallel.Complex) } method.
      * @param x x coordinate of the pixel in the image
      * @param y y coordinate of the pixel in the image
@@ -329,7 +334,7 @@ class MandelbrotSetTask extends Task<Long> {
 
     /**
      * Returns a color for a given iteration count.
-     * @param count number of iterations return by 
+     * @param count number of iterations return by
      * {@link #calc(demo.parallel.Complex)} method
      * @return color from pre-calculated table
      */
@@ -348,8 +353,16 @@ class MandelbrotSetTask extends Task<Long> {
     static {
 
         /**
+         * Color stops for colors table: color values
          */
         Color[] cc = {
+                Color.rgb(40, 0, 0),
+                Color.YELLOWGREEN,
+                Color.WHITE,
+                Color.ORANGE,
+                Color.rgb(100, 0, 0),
+                Color.RED,
+                Color.rgb(50, 0, 0)
         };
 
         /**
