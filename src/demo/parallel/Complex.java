@@ -53,7 +53,7 @@ public class Complex {
      * create a new object with the given real and imaginary parts
      *
      * @param real a complex number real part
-     * @param imag a complex number imaginary part 
+     * @param imag a complex number imaginary part
      */
     public Complex(double real, double imag) {
         re = real;
@@ -100,12 +100,21 @@ public class Complex {
     }
 
 
+    public double getRe() {
+        return re;
+    }
+
+    public double getIm() {
+        return im;
+    }
     /**
-     * Square of Complex object's length, we're using square of length to 
+     * Square of Complex object's length, we're using square of length to
      * eliminate the computation of square root
      * @return square of length
      */
     public double lengthSQ() {
         return re * re + im * im;
     }
+
 }
+
